@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.08);
+        width: 380px;
+        text-align: center;   /* <-- This centers content */
+    }
+
+    h2 {
+        margin-bottom: 25px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;  /* centers inputs */
+    }
+
+    .error {
+        background-color: #ffe5e5;
+        color: #c0392b;
+        padding: 10px;
+        border-radius: 6px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        font-size: 14px;
+        transition: opacity 0.5s ease;
+    }
+
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(to right, #1e73e8, #1976d2);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        opacity: 0.95;
+    }
+
+    .link {
+        margin-top: 18px;
+        font-size: 14px;
+    }
+
+    .link a {
+        color: #1e73e8;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .link a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+</head>
+
+
+<body>
+    <div class="container">
+        <h2>Login</h2>
+
+        <form method="POST" action="/login">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <div class="link">
+            <p>Don't have an account? <a href="/register">Register</a></p>
+        </div>
+
+        {% if error %}
+            <div id="error-message" class="error">
+                {{ error }}
+            </div>
+        {% endif %}
+
+    </div>
+</body>
+
+<script>
+    const error = document.getElementById("error-message");
+    if (error) {
+        setTimeout(() => {
+            error.style.opacity = "0";
+            setTimeout(() => {
+                error.remove();
+            }, 500);
+        }, 3000);
+    }
+</script>
+
+</html>

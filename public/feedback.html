@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+    <title>Feedback</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.08);
+            width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 120px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: none;
+            background: linear-gradient(to right, #1e73e8, #1976d2);
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.95;
+        }
+
+        .link {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .link a {
+            text-decoration: none;
+            color: #1e73e8;
+            font-weight: 500;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Submit Feedback</h1>
+
+    <form method="POST" action="/submit">
+        <textarea name="text" placeholder="Type your feedback here..." required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div class="link">
+        <a href="/submissions">View Submissions</a>
+    </div>
+</div>
+
+</body>
+</html>

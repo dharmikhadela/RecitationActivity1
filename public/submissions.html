@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+  <title>Submissions</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 650px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+      padding: 30px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .back a {
+      text-decoration: none;
+      color: #1e73e8;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .back a:hover {
+      text-decoration: underline;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      line-height: 1.4;
+      word-wrap: break-word;
+    }
+
+    .empty {
+      color: #777;
+      font-size: 14px;
+      text-align: center;
+      padding: 30px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h1>Submissions</h1>
+      <div class="back"><a href="/feedback">Enter a feedback!</a></div>
+    </div>
+
+    {% if items|length == 0 %}
+      <div class="empty">No submissions yet.</div>
+    {% else %}
+      <ul>
+        {% for item in items %}
+          <li>{{ item.text }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+
+</body>
+</html>
