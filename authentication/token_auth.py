@@ -1,3 +1,5 @@
+import hashlib
+
 from database import mongo_client
 
 # This is the users database
@@ -9,7 +11,8 @@ def validate_token(token):
     if not token:
         return False
 
-    session = sessions.find_one({"auth_token": token})
+    hashed_token = hashlib.sha256(token.encode()).hexdigest()
+    session = sessions.find_one({"auth_token": hashed_token})
     if not session:
         return False
 

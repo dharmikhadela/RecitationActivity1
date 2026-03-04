@@ -7,6 +7,7 @@ from database import mongo_client
 from authentication.login_auth import login_user
 from authentication.register_auth import register_user
 from authentication.token_auth import validate_token
+from multipart.store_image import store_feedback_with_image
 
 # This is the users database
 auth_db = mongo_client["auth-db"]
@@ -16,7 +17,7 @@ user_credentials = auth_db["users"]
 feedback_db = mongo_client["feedback-db"]
 feedback_collection = feedback_db["feedback"]
 
-app = Flask(__name__, template_folder="public")
+app = Flask(__name__, template_folder="public", static_folder="public", static_url_path="/public")
 
 @app.get("/feedback")
 def feedback():
@@ -29,14 +30,18 @@ def feedback():
 
 @app.post("/submit")
 def submit():
-    text = request.form.get("text", "").strip()
-
     token = request.cookies.get("auth_token")
     if not validate_token(token):
         return redirect(url_for("login_page"))
 
-    if text :
-        feedback_collection.insert_one({"text": text, "ts": datetime.utcnow()})
+    text = request.form.get("text", "")
+    file_obj = request.files.get("image")
+
+    status_code, response_message = store_feedback_with_image(text, file_obj)
+
+    if status_code != 200:
+        return render_template("feedback.html", error=response_message), status_code
+
     return redirect(url_for("submissions"), code=303)
 
 @app.get("/submissions")
@@ -91,8 +96,10 @@ def login():
     if "HttpOnly" in cookie_vals:
         http_only = True
     max_ages = [directive for directive in cookie_vals if directive.startswith("Max-Age=")]
+    print("max-ages: " + max_ages[0])
     if len(max_ages) == 1:
         max_age = int(max_ages[0].split("=")[1])
+        print(max_age)
 
     if status_code == 200:
         res = make_response(redirect(url_for("feedback"), code=303))

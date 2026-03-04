@@ -1,3 +1,4 @@
+import hashlib
 import uuid
 from database import mongo_client
 
@@ -11,14 +12,15 @@ def set_cookie(user_id):
 
     # Generates a random token and stores it in the database.
     auth_token = str(uuid.uuid4())
+    hashed_token = hashlib.sha256(auth_token.encode()).hexdigest()
     user_credentials.update_one({"id": user_id},
                                 {"$set":
-                                     {"auth_token": auth_token}})
+                                     {"auth_token": hashed_token}})
 
     # This represents the key and the value pair of a cookie.
     # Any directives (if required) should be added to the value part with a '; '
     value = auth_token
-    cookie = {"auth_token": value}
+    cookie = {"auth_token": value + "; HttpOnly; Max-Age=3600"}
 
     return cookie
 

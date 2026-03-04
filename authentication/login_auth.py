@@ -1,5 +1,6 @@
 from authentication.set_cookie import set_cookie
 from database import mongo_client
+import bcrypt
 
 # This is the users database
 auth_db = mongo_client["auth-db"]
@@ -13,11 +14,10 @@ def login_user(username, password):
     # Finding the user from the database
     user = user_credentials.find_one({
         "username": username.lower(),
-        "password": password
     })
 
     # If user found, sets an auth_token cookie for the id.
-    if user:
+    if user and bcrypt.checkpw(password.encode(), user["password"].encode()):
         status_code = 200
         response_message = "OK"
         cookie = set_cookie(user.get("id"))
