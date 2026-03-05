@@ -1,7 +1,8 @@
+# This is a test case for how multipart requests work
 def test():
     request = Request(
         b'POST /form-path HTTP/1.1\r\n'
-        b'Content-Length: 9937\r\n'
+        b'Content-Length: 308\r\n'
         b'Content-Type: multipart/form-data; boundary=----WebKitFormBoundarycriD3u6M0UuPR1ia\r\n\r\n'
         b'------WebKitFormBoundarycriD3u6M0UuPR1ia\r\n'
         b'Content-Disposition: form-data; name="commenter"\r\n\r\n'
@@ -9,7 +10,7 @@ def test():
         b'------WebKitFormBoundarycriD3u6M0UuPR1ia\r\n'
         b'Content-Disposition: form-data; name="upload"; filename=discord.png\r\n'
         b'Content-Type: image/png\r\n\r\n' 
-        b'<bytes_of_the_file>' + b'\r\n'
+        b'THESEARETHEBYTESOFTHEFILE\r\n'
         b'------WebKitFormBoundarycriD3u6M0UuPR1ia--'
     )
 
@@ -27,6 +28,6 @@ def test():
     assert Part_2.headers.__contains__('Content-Disposition')
     assert Part_2.headers['Content-Disposition'] == 'form-data; name="upload"; filename=discord.png'
     assert Part_2.name == 'upload'
-    assert Part_2.content == '<bytes_of_the_file>'
+    assert Part_2.content == 'THESEARETHEBYTESOFTHEFILE'
 
     print('Test Passed!')

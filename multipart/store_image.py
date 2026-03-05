@@ -7,7 +7,10 @@ from database import mongo_client
 feedback_db = mongo_client["feedback-db"]
 feedback_collection = feedback_db["feedback"]
 
+# This function stores the feedback and optional gif into the database
+# It returns a status code and response message.
 def store_feedback_with_image(text, file_obj):
+    # Remove spaces in case text exists or "" in case of None
     text = (text or "").strip()
 
     # If only image present return error as feedback should be with text.

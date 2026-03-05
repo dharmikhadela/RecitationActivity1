@@ -78,7 +78,7 @@ Who is right?
 
 
 #### Here is Mr. Nilo judging you: 
-![Mr. Nilo](./public/Mr.%20Nilo.jpg)
+![Mr. Nilo](../public/Mr.%20Nilo.jpg)
 
 
 Some useful links:
